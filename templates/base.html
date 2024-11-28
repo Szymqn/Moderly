@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <h1>My Site</h1>
+
+    <a href="{% url 'home' %}">Home</a>
+    <span>/</span>
+
+    {% if current_user %}
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" style="background:none;border:none;color:blue;text-decoration:underline;cursor:pointer;">
+                Logout
+            </button>
+        </form>
+        <hr>
+        <h2>Welcome <span style="color: dodgerblue;">{{ current_user.username }}</span>!</h2>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <span>/</span>
+        <hr>
+    {% endif %}
+
+    {% block body %}{% endblock %}
+</body>
+</html>
