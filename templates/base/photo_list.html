@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slider List</title>
+</head>
+<body>
+    <h1>Slider List</h1>
+    <ul>
+        {% for slider in sliders %}
+        <li>
+            <a href="{% url 'edit_slider' slider.id %}">{{ slider.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_slider' %}">Add New Slider</a>
+</body>
+</html>
