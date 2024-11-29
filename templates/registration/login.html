@@ -39,10 +39,16 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-        <form action="{% url 'github_login' %}" method="post">
+
+        <div class="text-center my-3">or</div>
+
+        <form action="{% url 'github_login' %}" method="post" class="col-6 mx-auto">
             {% csrf_token %}
-            <button type="submit">Login with GitHub</button>
+            <button type="submit" class="btn btn-dark btn-block w-100">
+                <i class="fab fa-github"></i> Login with GitHub
+            </button>
         </form>
     </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>
