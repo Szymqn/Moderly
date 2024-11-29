@@ -39,6 +39,10 @@
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <form action="{% url 'github_login' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Login with GitHub</button>
+        </form>
     </div>
 </body>
 </html>

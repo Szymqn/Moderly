@@ -43,6 +43,14 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "base.apps.BaseConfig",
     "debug_toolbar",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "dj_rest_auth",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
+    "oauth2_provider",
 ]
 
 MIDDLEWARE = [
@@ -51,10 +59,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddlewa'
-    're',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'Moderly.urls'
@@ -79,6 +87,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Moderly.wsgi.application'
 
+
+# AUTHORIZATION
+AUTHENTICATION_BACKENDS = ("allauth.account.auth_backends.AuthenticationBackend",)
+
+REST_USE_JWT = True
+
+SITE_ID = 1
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "login"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -120,9 +139,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
