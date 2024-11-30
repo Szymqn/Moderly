@@ -92,6 +92,8 @@ WSGI_APPLICATION = 'Moderly.wsgi.application'
 # AUTHORIZATION
 AUTHENTICATION_BACKENDS = ("allauth.account.auth_backends.AuthenticationBackend",)
 
+AUTH_USER_MODEL = "users.CustomUser"
+
 REST_USE_JWT = True
 
 SITE_ID = 1

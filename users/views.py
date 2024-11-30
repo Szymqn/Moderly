@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from .models import CustomUser
 
 
 def login_page(request):
@@ -9,7 +9,7 @@ def login_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        if not User.objects.filter(username=username).exists():
+        if not CustomUser.objects.filter(username=username).exists():
             messages.error(request, 'Invalid Username')
             return redirect('login')
 
@@ -32,13 +32,13 @@ def register_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        user = User.objects.filter(username=username)
+        user = CustomUser.objects.filter(username=username)
 
         if user.exists():
             messages.info(request, "Username already taken!")
             return redirect('register')
 
-        user = User.objects.create_user(
+        user = CustomUser.objects.create_user(
             first_name=first_name,
             last_name=last_name,
             username=username
