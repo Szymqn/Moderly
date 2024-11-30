@@ -1,28 +1,68 @@
+{% include 'header.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .card-img-top {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: -8px;
+        }
+        .col {
+            flex: 1 0 30%;
+            max-width: 30%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        .product-section .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-section .card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .product-section .description h5 {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .col {
+                flex: 1 0 45%;
+                max-width: 45%;
+            }
+        }
+        @media (max-width: 576px) {
+            .col {
+                flex: 1 0 100%;
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <div class="row">
+        <div class="row product-section">
             {% for product in products %}
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ product.photo.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{ product.photo.image.url }}" alt="{{ product.name }}">
+                    <div class="description">
+                        <h5>{{ product.name }}</h5>
+                        <p><strong>Price:</strong> ${{ product.price }}</p>
                     </div>
                 </div>
             </div>
