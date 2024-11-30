@@ -1,5 +1,5 @@
 from django import forms
-from .models import Photo, Slider
+from .models import Photo, Slider, SliderPhoto
 
 
 class UploadPhotoForm(forms.ModelForm):
@@ -29,3 +29,8 @@ class CreateSliderForm(forms.ModelForm):
 class AddPhotoToSliderForm(forms.Form):
     photo = forms.ModelChoiceField(queryset=Photo.objects.all())
     slider = forms.ModelChoiceField(queryset=Slider.objects.all())
+    order = forms.IntegerField(min_value=0, initial=0)
+
+
+class ChooseSliderForm(forms.Form):
+    slider = forms.ModelChoiceField(queryset=Slider.objects.all(), label="Choose Slider")

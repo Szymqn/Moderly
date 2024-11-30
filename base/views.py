@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
-from .models import Photo
-from .forms import AddPhotoToSliderForm, CreateSliderForm, UploadPhotoForm
+from .models import Photo, Slider
+from .forms import AddPhotoToSliderForm, CreateSliderForm, UploadPhotoForm, ChooseSliderForm
 
 
 def home(request):
@@ -11,6 +11,7 @@ def home(request):
     return render(request, 'home.html', context)
 
 
+@user_passes_test(lambda u: u.is_superuser)
 def upload_photo(request):
     if request.method == 'POST':
         form = UploadPhotoForm(request.POST, request.FILES)
@@ -49,5 +50,23 @@ def create_slider(request):
 
 
 def slider(request):
-    photos = Photo.objects.all().order_by('order')
+    selected_slider_id = request.session.get('selected_slider_id')
+    if selected_slider_id:
+        selected_slider = Slider.objects.get(id=selected_slider_id)
+        photos = selected_slider.photos.all().order_by('sliderphoto__order')
+    else:
+        photos = Photo.objects.all()
     return render(request, 'base/slider.html', {'photos': photos})
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def choose_slider(request):
+    if request.method == 'POST':
+        form = ChooseSliderForm(request.POST)
+        if form.is_valid():
+            selected_slider = form.cleaned_data['slider']
+            request.session['selected_slider_id'] = selected_slider.id
+            return redirect('slider')
+    else:
+        form = ChooseSliderForm()
+    return render(request, 'base/choose_slider.html', {'form': form})
