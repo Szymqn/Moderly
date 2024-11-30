@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from users.models import CustomUser
 
 # Create your models here.
 
@@ -36,3 +37,29 @@ class SliderPhoto(models.Model):
 
     class Meta:
         ordering = ['order']
+
+
+class Color(models.Model):
+    name = models.CharField(max_length=50)
+    hex_value = models.CharField(max_length=7)
+
+    def __str__(self):
+        return self.name
+
+
+class Theme(models.Model):
+    name = models.CharField(max_length=50)
+    primary_color = models.ForeignKey(Color, related_name='primary_themes', on_delete=models.CASCADE)
+    secondary_color = models.ForeignKey(Color, related_name='secondary_themes', on_delete=models.CASCADE)
+    tertiary_color = models.ForeignKey(Color, related_name='tertiary_themes', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    selected_theme = models.ForeignKey(Theme, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.user.username

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "base.apps.BaseConfig",
     "products.apps.ProductsConfig",
+    "cart.apps.CartConfig",
     "debug_toolbar",
     "rest_framework",
     "rest_framework.authtoken",

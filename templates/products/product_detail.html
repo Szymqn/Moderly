@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }}</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .product-detail img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 product-detail">
+        <h1>{{ product.name }}</h1>
+        <img src="{{ product.photo.image.url }}" alt="{{ product.name }}">
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <p>{{ product.description }}</p>
+    </div>
+</body>
+</html>
