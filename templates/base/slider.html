@@ -6,40 +6,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
     <style>
-        .slider {
-            display: flex;
-        }
-        .slider .card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-        }
-        .slider .card img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 8px; /* Reduce space below the image */
-        }
-        .slider .card .description {
-            margin-top: 8px; /* Reduce space above the description */
-        }
-        .slider .card .description h2 {
-            margin: 0; /* Remove margin from the title */
-        }
-        .slider .card .description p {
-            margin: 8px 0 0 0; /* Reduce space below the description */
-        }
-        .slick-slide {
-            display: flex;
-            justify-content: center;
-            align-items: stretch;
-        }
-    </style>
+    .slider {
+        display: flex;
+    }
+    .slider .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+    .slider .card img {
+        width: 100%;
+        height: 200px; /* Set a fixed height for the images */
+        object-fit: cover; /* Maintain aspect ratio and cover the area */
+        border-radius: 8px;
+        margin-bottom: 8px; /* Reduce space below the image */
+    }
+    .slider .card .description {
+        margin-top: 8px; /* Reduce space above the description */
+    }
+    .slider .card .description h2 {
+        margin: 0; /* Remove margin from the title */
+    }
+    .slider .card .description p {
+        margin: 8px 0 0 0; /* Reduce space below the description */
+    }
+    .slick-slide {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+    }
+</style>
 </head>
 <body>
     <h1>Slider</h1>
