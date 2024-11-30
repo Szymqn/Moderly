@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from .models import Photo
-from .forms import PhotoForm
+from .forms import AddPhotoToSliderForm, CreateSliderForm, UploadPhotoForm
 
 
 def home(request):
@@ -11,24 +11,43 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def add_photo(request):
+def upload_photo(request):
     if request.method == 'POST':
-        form = PhotoForm(request.POST, request.FILES)
+        form = UploadPhotoForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('photo_list')
+            return redirect('slider')
     else:
-        form = PhotoForm()
-    return render(request, 'base/add_photo.html', {'form': form})
+        form = UploadPhotoForm()
+    return render(request, 'base/upload_photo.html', {'form': form})
 
 
 @user_passes_test(lambda u: u.is_superuser)
-def photo_list(request):
-    photos = Photo.objects.all().order_by('order')
-    return render(request, 'base/photo_list.html', {'photos': photos})
+def add_photo_to_slider(request):
+    if request.method == 'POST':
+        form = AddPhotoToSliderForm(request.POST)
+        if form.is_valid():
+            slider = form.cleaned_data['slider']
+            photo = form.cleaned_data['photo']
+            slider.photos.add(photo)
+            return redirect('slider')
+    else:
+        form = AddPhotoToSliderForm()
+    return render(request, 'base/add_photo_to_slider.html', {'form': form})
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def create_slider(request):
+    if request.method == 'POST':
+        form = CreateSliderForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('slider')
+    else:
+        form = CreateSliderForm()
+    return render(request, 'base/create_slider.html', {'form': form})
 
 
 def slider(request):
-    photos = Photo.objects.all()
+    photos = Photo.objects.all().order_by('order')
     return render(request, 'base/slider.html', {'photos': photos})

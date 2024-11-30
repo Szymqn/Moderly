@@ -13,10 +13,10 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         img = Image.open(self.image.path)
-        if img.height > 800 or img.width > 800:
-            output_size = (800, 800)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+        max_size = (800, 800)
+
+        img.thumbnail(max_size, Image.LANCZOS)
+        img.save(self.image.path)
 
 
 class Slider(models.Model):

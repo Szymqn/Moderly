@@ -6,9 +6,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css">
     <style>
-        .slider img {
-            width: 100%;
+        .slider {
+            display: flex;
+        }
+        .slider .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+        .slider .card img {
+            max-width: 100%;
             height: auto;
+            border-radius: 8px;
+            margin-bottom: 8px; /* Reduce space below the image */
+        }
+        .slider .card .description {
+            margin-top: 8px; /* Reduce space above the description */
+        }
+        .slider .card .description h2 {
+            margin: 0; /* Remove margin from the title */
+        }
+        .slider .card .description p {
+            margin: 8px 0 0 0; /* Reduce space below the description */
+        }
+        .slick-slide {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
         }
     </style>
 </head>
@@ -16,7 +45,13 @@
     <h1>Slider</h1>
     <div class="slider">
         {% for photo in photos %}
-        <div><img src="{{ photo.image.url }}" alt="{{ photo.title }}"></div>
+        <div class="card">
+            <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+            <div class="description">
+                <h2>{{ photo.title }}</h2>
+                <p>{{ photo.description }}</p>
+            </div>
+        </div>
         {% endfor %}
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -47,6 +82,20 @@
                     }
                 ]
             });
+
+            function setEqualHeight() {
+                var maxHeight = 0;
+                $('.slider .card').each(function() {
+                    var cardHeight = $(this).outerHeight();
+                    if (cardHeight > maxHeight) {
+                        maxHeight = cardHeight;
+                    }
+                });
+                $('.slider .card').css('height', maxHeight + 'px');
+            }
+
+            setEqualHeight();
+            $(window).resize(setEqualHeight);
         });
     </script>
 </body>
