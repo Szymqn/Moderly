@@ -19,17 +19,25 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = current_user
-            comment.product = product
-            comment.save()
-            return redirect('product_detail', product_id=product.id)
+        comment_id = request.POST.get('comment_id')
+        if comment_id:
+            comment = get_object_or_404(Comment, id=comment_id)
+            if str(current_user.category) == str(product.category) or current_user.is_admin:
+                comment.reply = request.POST.get('reply')
+                comment.save()
+                return redirect('product_detail', product_id=product.id)
+        else:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.user = current_user
+                comment.product = product
+                comment.save()
+                return redirect('product_detail', product_id=product.id)
     else:
         form = CommentForm()
 
-    all_comments = Comment.objects.all()
+    all_comments = Comment.objects.filter(product=product)
     valid_comments = []
     permission_comments = []
 
@@ -37,8 +45,7 @@ def product_detail(request, product_id):
         if (str(current_user.category) == str(product.category) or
                 current_user.is_admin is True or
                 comment.user == current_user or
-                comment.approved is True
-        ):
+                comment.approved is True):
             valid_comments.append(comment)
             if str(current_user.category) == str(product.category) or current_user.is_admin is True:
                 permission_comments.append(comment)
