@@ -19,6 +19,11 @@
             border-radius: 8px;
             margin-bottom: 16px;
         }
+        .comment {
+            border-top: 1px solid #ccc;
+            padding-top: 16px;
+            margin-top: 16px;
+        }
     </style>
 </head>
 <body>
@@ -27,6 +32,17 @@
         <img src="{{ product.photo.url }}" alt="{{ product.name }}">
         <p><strong>Price:</strong> ${{ product.price }}</p>
         <p>{{ product.description }}</p>
+
+        <h2>Comments</h2>
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.user.username }}</strong> said:</p>
+                <p>{{ comment.content }}</p>
+                <p><small>Posted on {{ comment.created_at }}</small></p>
+            </div>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
     </div>
 </body>
 </html>
