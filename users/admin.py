@@ -5,9 +5,26 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('is_moderator',)}),
-    )
+    fieldsets = [
+        (
+            None,
+            {
+                'fields': (
+                    'username',
+                    'password',
+                    'is_moderator',
+                    'is_admin',
+                    'category',
+                    'ranking',
+                    'street_address',
+                    'city',
+                    'state',
+                    'postal_code',
+                    'country',
+                )
+            },
+        )
+    ]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
