@@ -17,6 +17,18 @@ def product_list(request):
 def product_detail(request, product_id):
     current_user = request.user if request.user.is_authenticated else None
     product = get_object_or_404(Product, id=product_id)
+    form = CommentForm()
+    description_form = None
+
+    if current_user and (current_user.is_admin or
+                         str(current_user.category) == str(product.category)):
+        if request.method == 'POST':
+            description_form = ProductDescriptionForm(request.POST, instance=product)
+            if description_form.is_valid():
+                description_form.save()
+                return redirect('product_detail', product_id=product.id)
+        else:
+            description_form = ProductDescriptionForm(instance=product)
 
     if request.method == 'POST':
         if 'comment_id' in request.POST:
@@ -25,13 +37,6 @@ def product_detail(request, product_id):
             if str(current_user.category) == str(product.category) or current_user.is_admin:
                 comment.reply = request.POST.get('reply')
                 comment.save()
-                return redirect('product_detail', product_id=product.id)
-        elif 'description' in request.POST:
-            if current_user.is_admin or current_user == product.category.moderator:
-                description_form = ProductDescriptionForm(request.POST, instance=product)
-                if description_form.is_valid():
-                    description_form.save()
-                    return redirect('product_detail', product_id=product.id)
         else:
             form = CommentForm(request.POST)
             if form.is_valid():
@@ -40,9 +45,6 @@ def product_detail(request, product_id):
                 comment.product = product
                 comment.save()
                 return redirect('product_detail', product_id=product.id)
-    else:
-        form = CommentForm()
-        description_form = ProductDescriptionForm(instance=product)
 
     all_comments = Comment.objects.filter(product=product)
     valid_comments = []
