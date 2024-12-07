@@ -6,14 +6,7 @@ from .forms import AddPhotoToSliderForm, CreateSliderForm, UploadPhotoForm, Choo
 
 
 def home(request):
-    user_events = []
-    current_user = request.user if request.user.is_authenticated else None
-
-    if request.user.is_authenticated:
-        if current_user.is_superuser or current_user.is_moderator:
-            user_events = Comment.objects.all()
-        else:
-            user_events = Comment.objects.filter(user=request.user)
+    user_events = Comment.objects.all()
 
     return render(request, 'base/home.html', {
         'current_user': request.user if request.user.is_authenticated else None,
