@@ -1,6 +1,21 @@
 {% include 'header.html' %}
-sad
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        .event {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 8px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
 {% if user_events %}
     <h2>Your Events</h2>
     <div>
@@ -11,3 +26,5 @@ sad
         {% endfor %}
     </div>
 {% endif %}
+</body>
+</html>

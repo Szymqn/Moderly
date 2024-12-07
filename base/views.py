@@ -1,14 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from .models import Photo, Slider
+from products.models import Comment
 from .forms import AddPhotoToSliderForm, CreateSliderForm, UploadPhotoForm, ChooseSliderForm
 
 
 def home(request):
-    context = {
-        'current_user': request.user if request.user.is_authenticated else None
-    }
-    return render(request, 'home.html', context)
+    user_events = []
+    current_user = request.user if request.user.is_authenticated else None
+
+    if request.user.is_authenticated:
+        if current_user.is_superuser or current_user.is_moderator:
+            user_events = Comment.objects.all()
+        else:
+            user_events = Comment.objects.filter(user=request.user)
+
+    return render(request, 'base/home.html', {
+        'current_user': request.user if request.user.is_authenticated else None,
+        'user_events': user_events,
+    })
 
 
 @user_passes_test(lambda u: u.is_superuser)
