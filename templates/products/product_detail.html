@@ -34,8 +34,17 @@
         <h1>{{ product.name }}</h1>
         <img src="{{ product.photo.url }}" alt="{{ product.name }}">
         <p><strong>Price:</strong> ${{ product.price }}</p>
-        <p>{{ product.description }}</p>
+        <p>{{ product.description|safe }}</p>
 
+        {% if permission_comments %}
+            <h2>Edit Description</h2>
+            <form method="post" action="{% url 'product_detail' product.id %}">
+                {% csrf_token %}
+                {{ description_form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+        {% endif %}
+    
         <h2>Comments</h2>
         {% for comment in comments %}
             <div class="comment">
