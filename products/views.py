@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Comment
-from .form import CommentForm
+from .form import CommentForm, ProductDescriptionForm
 
 
 def product_list(request):
@@ -19,13 +19,19 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if request.method == 'POST':
-        comment_id = request.POST.get('comment_id')
-        if comment_id:
+        if 'comment_id' in request.POST:
+            comment_id = request.POST.get('comment_id')
             comment = get_object_or_404(Comment, id=comment_id)
             if str(current_user.category) == str(product.category) or current_user.is_admin:
                 comment.reply = request.POST.get('reply')
                 comment.save()
                 return redirect('product_detail', product_id=product.id)
+        elif 'description' in request.POST:
+            if current_user.is_admin or current_user == product.category.moderator:
+                description_form = ProductDescriptionForm(request.POST, instance=product)
+                if description_form.is_valid():
+                    description_form.save()
+                    return redirect('product_detail', product_id=product.id)
         else:
             form = CommentForm(request.POST)
             if form.is_valid():
@@ -36,6 +42,7 @@ def product_detail(request, product_id):
                 return redirect('product_detail', product_id=product.id)
     else:
         form = CommentForm()
+        description_form = ProductDescriptionForm(instance=product)
 
     all_comments = Comment.objects.filter(product=product)
     valid_comments = []
@@ -55,6 +62,7 @@ def product_detail(request, product_id):
                       'product': product,
                       'comments': valid_comments,
                       'form': form,
+                      'description_form': description_form,
                       'permission_comments': permission_comments,
                   })
 
