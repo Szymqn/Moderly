@@ -39,6 +39,15 @@
                 <p><strong>{{ comment.user.username }}</strong> said:</p>
                 <p>{{ comment.content }}</p>
                 <p><small>Posted on {{ comment.created_at }}</small></p>
+                {% if comment.approved is False %}
+                    <p><small>Approved {{ comment.approved }}</small></p>
+                {% endif %}
+                {% if permission_comments %}
+                    <form method="post" action="{% url 'approve_comment' comment.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Approve</button>
+                    </form>
+                {% endif %}
             </div>
         {% empty %}
             <p>No comments yet.</p>
