@@ -29,6 +29,7 @@ class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comments')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     content = models.TextField()
+    reply = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
