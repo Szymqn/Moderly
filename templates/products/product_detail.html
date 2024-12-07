@@ -36,7 +36,7 @@
         <p><strong>Price:</strong> ${{ product.price }}</p>
         <p>{{ product.description|safe }}</p>
 
-        {% if permission_comments %}
+        {% if description_form %}
             <h2>Edit Description</h2>
             <form method="post" action="{% url 'product_detail' product.id %}">
                 {% csrf_token %}
