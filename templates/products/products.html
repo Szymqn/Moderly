@@ -77,6 +77,12 @@
                     <div class="description">
                         <h5>{{ product.name }}</h5>
                         <p><strong>Price:</strong> ${{ product.price }}</p>
+                        <form method="post" action="{% url 'product_list' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit">Buy</button>
+                        </form>
                     </div>
                 </div>
             </div>

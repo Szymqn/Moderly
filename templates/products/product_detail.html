@@ -34,6 +34,11 @@
         <h1>{{ product.name }}</h1>
         <img src="{{ product.photo.url }}" alt="{{ product.name }}">
         <p><strong>Price:</strong> ${{ product.price }}</p>
+        <form method="post" action="">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit">Buy</button>
+        </form>
         <p>{{ product.description|safe }}</p>
 
         {% if description_form %}
@@ -52,7 +57,7 @@
                 {{ form.as_p }}
                 <button type="submit" name="comment_form">Submit</button>
             </form>
-    
+
         {% for comment in comments %}
             <div class="comment">
                 <p><strong>{{ comment.user.username }}</strong> said:</p>

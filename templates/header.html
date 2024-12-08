@@ -11,6 +11,8 @@
     <a href="{% url 'slider' %}">Slider</a>
     <span>/</span>
     <a href="{% url 'product_list' %}">Products</a>
+    <span>/</span>
+    <a href="{% url 'view_cart' %}">Cart</a>
 
     {% if current_user %}
         <form method="post" action="{% url 'logout' %}" style="display:inline;">
