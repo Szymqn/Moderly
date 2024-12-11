@@ -1,0 +1,26 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Order Status</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Change Order Status</h1>
+        <form method="post" action="{% url 'change_order_status' order.id %}">
+            {% csrf_token %}
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="Processing" {% if order.status == 'Processing' %}selected{% endif %}>Processing</option>
+                <option value="Shipped" {% if order.status == 'Shipped' %}selected{% endif %}>Shipped</option>
+                <option value="Delivered" {% if order.status == 'Delivered' %}selected{% endif %}>Delivered</option>
+                <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+            <button type="submit">Update Status</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from .models import Cart, CartItem
+from .models import Cart, CartItem, Order, OrderItem
 from .forms import AddToCartForm
 from products.models import Product
 
@@ -57,3 +57,41 @@ def update_cart_item(request, item_id):
             return redirect('view_cart')
     cart_item.save()
     return redirect('view_cart')
+
+
+@login_required
+def checkout(request):
+    cart = get_object_or_404(Cart, user=request.user)
+    if request.method == 'POST':
+        order = Order.objects.create(
+            user=request.user,
+            shipping_address=f"{request.user.street_address}, {request.user.city}, {request.user.state}, {request.user.postal_code}, {request.user.country}",
+            total_price=sum(item.product.price * item.quantity for item in cart.items.all())
+        )
+        for item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                quantity=item.quantity,
+                price=item.product.price
+            )
+        cart.items.all().delete()
+        return redirect('order_status', order_id=order.id)
+    return render(request, 'cart/view_cart.html', {'cart': cart})
+
+
+@login_required
+def order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    return render(request, 'orders/order_status.html', {'order': order})
+
+
+@login_required
+def change_order_status(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    if request.user.is_admin or request.user.is_moderator:
+        if request.method == 'POST':
+            order.status = request.POST.get('status')
+            order.save()
+            return redirect('order_status', order_id=order.id)
+    return render(request, 'orders/change_order_status.html', {'order': order})

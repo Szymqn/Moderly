@@ -36,6 +36,10 @@
             </tbody>
         </table>
         <p>Total: ${{ total }}</p>
+        <form method="post" action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <button type="submit">Place Order</button>
+        </form>
     </div>
 </body>
 </html>
