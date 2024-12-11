@@ -1,0 +1,23 @@
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Status</h1>
+        <p>Order ID: {{ order.id }}</p>
+        <p>Status: {{ order.status }}</p>
+        <p>Total Price: ${{ order.total_price }}</p>
+        <h2>Items</h2>
+        <ul>
+            {% for item in order.items.all %}
+            <li>{{ item.product.name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Comment
+from cart.models import Cart, CartItem
 from .form import CommentForm, ProductDescriptionForm
 
 
@@ -11,6 +12,19 @@ def product_list(request):
     else:
         products = Product.objects.all()
     categories = Category.objects.all()
+
+    if request.method == 'POST':
+        product_id = request.POST.get('product_id')
+        product = get_object_or_404(Product, id=product_id)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if created:
+            cart_item.quantity = int(request.POST.get('quantity', 1))
+        else:
+            cart_item.quantity += int(request.POST.get('quantity', 1))
+        cart_item.save()
+        return redirect('view_cart')
+
     return render(request, 'products/products.html', {'products': products, 'categories': categories})
 
 
@@ -38,6 +52,16 @@ def product_detail(request, product_id):
             comment.product = product
             comment.save()
             return redirect('product_detail', product_id=product.id)
+
+    if request.method == 'POST' and 'quantity' in request.POST:
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        if created:
+            cart_item.quantity = int(request.POST['quantity'])
+        else:
+            cart_item.quantity += int(request.POST['quantity'])
+        cart_item.save()
+        return redirect('view_cart')
 
     all_comments = Comment.objects.filter(product=product)
     valid_comments = []
