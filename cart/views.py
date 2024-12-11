@@ -24,7 +24,7 @@ def add_to_cart(request, product_id):
 
 @login_required
 def view_cart(request):
-    cart = Cart.objects.get(user=request.user)
+    cart, created = Cart.objects.get_or_create(user=request.user)
     cart_items = cart.items.all()
     for item in cart_items:
         item.total_price = item.product.price * item.quantity
@@ -95,3 +95,20 @@ def change_order_status(request, order_id):
             order.save()
             return redirect('order_status', order_id=order.id)
     return render(request, 'orders/change_order_status.html', {'order': order})
+
+
+@login_required
+def order_history(request):
+    if request.method == 'POST' and (request.user.is_admin or request.user.is_moderator):
+        order_id = request.POST.get('order_id')
+        new_status = request.POST.get('status')
+        order = get_object_or_404(Order, id=order_id)
+        order.status = new_status
+        order.save()
+        return redirect('order_history')
+
+    if request.user.is_admin or request.user.is_moderator:
+        orders = Order.objects.all().order_by('-created_at')
+    else:
+        orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    return render(request, 'orders/order_history.html', {'orders': orders})
