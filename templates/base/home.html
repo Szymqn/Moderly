@@ -8,7 +8,7 @@
     <title>Home</title>
 </head>
 <body>
-{% if user_events %}
+{% if user_events and current_user %}
     <h2>Your Events</h2>
     <div>
         {% for event in user_events %}
