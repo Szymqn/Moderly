@@ -1,56 +1,48 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'auth.css' %}">
 </head>
 <body>
-    <div class="container mt-5">
-        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
-            {% csrf_token %} 
+    <div class="container">
+        <div class="auth-card register-card">
+            <h2>Register</h2>
+            <form method="post" action="{% url 'register' %}">
+                {% csrf_token %}
+                {% if messages %}
+                <div class="alert" role="alert">
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-            <h1 style="text-align: center;"><span style="color: midnightblue;">Moderly</span></h1>
-            <h3>Register</h3>
-            <hr>
+                <div class="form-group">
+                    <label for="first_name">First name</label>
+                    <input type="text" class="form-control" id="first_name" placeholder="Enter first name" name="first_name" required>
+                </div>
 
-            {% if messages %}
-            <div class="alert alert-primary" role="alert">
-                {% for message in messages %}
-                {{ message }}
-                {% endfor %}
+                <div class="form-group">
+                    <label for="last_name">Last name</label>
+                    <input type="text" name="last_name" class="form-control" id="last_name" placeholder="Enter last name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Email</label>
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Enter email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <div class="auth-link">
+                <a href="{% url 'login' %}">Already have an account? Login Here</a>
             </div>
-            {% endif %}
-
-            <div class="form-group">
-                <label for="exampleInputEmail1">First name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                    placeholder="Enter First name" name="first_name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputEmail1">Last name</label>
-                <input type="text" name="last_name" class="form-control" id="exampleInputEmail1"
-                    aria-describedby="emailHelp" placeholder="Enter Last name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email</label>
-                <input type="text" class="form-control" name="username" id="exampleInputEmail1"
-                    aria-describedby="emailHelp" placeholder="Enter email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                    placeholder="Password" required>
-            </div>
-
-            <p>Already have an account <a href="/login/">Login</a> </p>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
     </div>
 </body>
 </html>
