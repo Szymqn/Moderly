@@ -1,8 +1,15 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --tertiary-color: #e74c3c;
+    --text-color: #ffffff;
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #fafafa;
+  background: var(--primary-color);
 }
 
 .header {
@@ -10,13 +17,14 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  background-color: #fff;
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  background-color: var(--secondary-color);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
 .site-title {
   font-size: 2rem;
-  color: #333;
+  color: var(--text-color);
+  background-color: var(--tertiary-color);
 }
 
 .navbar {
