@@ -1,22 +1,46 @@
 {% include 'header.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-{% if user_events %}
-    <h2>Your Events</h2>
-    <div>
-        {% for event in user_events %}
-            <div class="event">
-                <p><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
+<style>
+    .text-center {
+        padding: 40px;
+    }
+    .card {
+        width: 500px;
+        height: 100px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        margin: 20px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #666;
+    }
+</style>
+
+{% if user_events and current_user %}
+    <div class="container my-5">
+        <h2 class="text-center">Your Events</h2>
+        <div class="row">
+            {% for event in user_events %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text"><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endif %}
-</body>
-</html>
