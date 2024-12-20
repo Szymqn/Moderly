@@ -4,15 +4,15 @@
     <div class="container my-5">
         <h2 class="text-center mb-4">Your Events</h2>
         <div class="row">
-        {% for event in user_events %}
+            {% for event in user_events %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card">
                     <div class="card-body">
-                        <p class="my-2"><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
+                        <p class="card-text"><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
 {% endif %}
