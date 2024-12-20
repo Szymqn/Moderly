@@ -1,46 +1,59 @@
-:root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --tertiary-color: #e74c3c;
-    --background-color: var(--primary-color);
-    --text-color: #ffffff;
-    --primary-light: #5dade2;
-    --secondary-light: #58d68d;
-    --tertiary-light: #ec7063;
-}
-
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
 }
 
 .header {
-    background-color: var(--secondary-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background-color: #fff;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.footer {
-    background-color: var(--tertiary-color);
-    color: var(--text-color);
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+.site-title {
+  font-size: 2rem;
+  color: #333;
 }
 
 .navbar {
-    background-color: var(--secondary-light);
+  display: flex;
 }
 
-.button {
-    background-color: var(--tertiary-light);
-    color: var(--text-color);
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
 }
 
-.event {
-    background-color: var(--tertiary-light);
-    color: black;
-    border: 1px solid #ddd;
-    padding: 8px;
-    margin-bottom: 8px;
+.nav-list a {
+  text-decoration: none;
+  color: #666;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
+}
+
+.color-picker {
+  display: flex;
+  flex-direction: column; /* Arrange items vertically */
+  gap: 1rem;
+  align-items: flex-start; /* Align items to the start */
+  margin-top: 20px;
+}
+
+.color-picker label {
+  font-size: 1rem;
+  color: #333;
+}
+
+.color-picker input[type="color"] {
+  border: none;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }

@@ -1,22 +1,18 @@
 {% include 'header.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
 {% if user_events and current_user %}
-    <h2>Your Events</h2>
-    <div>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Your Events</h2>
+        <div class="row">
         {% for event in user_events %}
-            <div class="event">
-                <p><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="my-2"><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
+                    </div>
+                </div>
             </div>
         {% endfor %}
+        </div>
     </div>
 {% endif %}
-</body>
-</html>
