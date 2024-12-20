@@ -1,5 +1,30 @@
 {% include 'header.html' %}
 
+<style>
+    .card {
+        width: 500px;
+        height: 100px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        margin: 20px;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-body {
+        padding: 20px;
+    }
+    
+    .card-text {
+        font-size: 1rem;
+        color: #666;
+    }
+</style>
+
 {% if user_events and current_user %}
     <div class="container my-5">
         <h2 class="text-center mb-4">Your Events</h2>
