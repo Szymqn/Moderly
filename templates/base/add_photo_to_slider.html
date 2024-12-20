@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Photo to Slider</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Add Photo to Slider</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Photo to Slider</button>
-    </form>
+    <div class="container mt-5">
+        <h1 class="mb-4">Add Photo to Slider</h1>
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Photo to Slider</button>
+        </form>
+    </div>
 </body>
 </html>

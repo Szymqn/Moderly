@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="{% static 'scripts.js' %}"></script>
 </head>
 <body>
   <header class="header">
@@ -30,11 +31,9 @@
     </nav>
   <div class="color-picker">
     <input type="color" id="primary-color" name="primary-color" value="#3498db">
-
     <input type="color" id="secondary-color" name="secondary-color" value="#2ecc71">
-
     <input type="color" id="tertiary-color" name="tertiary-color" value="#e74c3c">
-  </div>
+</div>
   </header>
   {% block body %}
   {% endblock %}

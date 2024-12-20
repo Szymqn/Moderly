@@ -37,14 +37,34 @@
     .slider .card .description p {
         margin: 8px 0 0 0; /* Reduce space below the description */
     }
-    .slick-slide {
+    .admin-buttons {
         display: flex;
         justify-content: center;
-        align-items: stretch;
+        margin: 20px 0 20px 0;
+    }
+    .admin-buttons a {
+        margin-right: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .admin-buttons a:hover {
+        background-color: #0056b3;
+
     }
 </style>
 </head>
 <body>
+    {% if user.is_superuser %}
+    <div class="admin-buttons">
+        <a href="{% url 'upload_photo' %}">Upload Photo</a>
+        <a href="{% url 'add_photo_to_slider' %}">Add Photo to Slider</a>
+        <a href="{% url 'create_slider' %}">Create Slider</a>
+        <a href="{% url 'choose_slider' %}">Choose Slider</a>
+    </div>
+    {% endif %}
     <div class="slider">
         {% for photo in photos %}
         <div class="card">
