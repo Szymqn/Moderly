@@ -1,4 +1,3 @@
-{% include 'header.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,7 @@
     <title>Change Order Status</title>
 </head>
 <body>
+    {% include 'header.html' %}
     <div class="container">
         <h1>Change Order Status</h1>
         <form method="post" action="{% url 'change_order_status' order.id %}">
