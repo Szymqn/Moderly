@@ -8,6 +8,7 @@ A platform with ready to use, predefined AI models for easy integration and fast
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
 * [Main Features](#main-features)
+* [Screenshots](#screenshots)
 * [License](#license)
 
 ## Introduction
