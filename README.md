@@ -3,15 +3,12 @@
 A platform with ready to use, predefined AI models for easy integration and fast deployment empowering businesses and startups.
 
 ## Table of Contents:
-* [Introduction](#introduction)
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
-  * [Installation](#installation)
+  * [Installation](#installation-and-usage)
 * [Main Features](#main-features)
 * [Screenshots](#screenshots)
 * [License](#license)
-
-## Introduction
 
 ## Getting Started
 
