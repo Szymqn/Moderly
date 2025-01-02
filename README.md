@@ -25,7 +25,7 @@ A platform with ready to use, predefined AI models for easy integration and fast
 pip install virtualenv
 ```
 
-### Installation
+### Installation and Usage
 
 #### 1. Clone the repository
 ```bash
@@ -45,6 +45,16 @@ python -m venv venv
 #### 4. Install the dependencies
 ```bash
 pip install -r .\requirements.txt
+```
+
+#### 5. Run the application
+```bash
+python .\manage.py runserver
+```
+
+#### 6. Open the browser and go to the following address
+```console
+http://127.0.0.1:8000/
 ```
 
 ## Main Features
