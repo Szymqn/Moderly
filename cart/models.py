@@ -32,6 +32,7 @@ class Order(models.Model):
         ('cancelled', 'Cancelled'),
     ]
 
+    payment_method = models.CharField(max_length=20, choices=[('credit_card', 'Credit Card'), ('paypal', 'PayPal')], default='credit_card')
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
     shipping_address = models.TextField()

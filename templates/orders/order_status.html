@@ -53,6 +53,8 @@
         <p><strong>Order ID:</strong> {{ order.id }}</p>
         <p><strong>Status:</strong> {{ order.status }}</p>
         <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+        <p><strong>Payment Method:</strong> {{ order.get_payment_method_display }}</p>
+        <p><strong>Shipping Address:</strong> {{ order.shipping_address }}</p>
         <h2>Items</h2>
         <ul>
             {% for item in order.items.all %}

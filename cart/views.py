@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .models import Cart, CartItem, Order, OrderItem
-from .forms import AddToCartForm
+from .forms import AddToCartForm, CheckoutForm
 from products.models import Product
 
 
@@ -63,21 +63,26 @@ def update_cart_item(request, item_id):
 def checkout(request):
     cart = get_object_or_404(Cart, user=request.user)
     if request.method == 'POST':
-        order = Order.objects.create(
-            user=request.user,
-            shipping_address=f"{request.user.street_address}, {request.user.city}, {request.user.state}, {request.user.postal_code}, {request.user.country}",
-            total_price=sum(item.product.price * item.quantity for item in cart.items.all())
-        )
-        for item in cart.items.all():
-            OrderItem.objects.create(
-                order=order,
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.price
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            order = Order.objects.create(
+                user=request.user,
+                shipping_address=f"{form.cleaned_data['street_address']}, {form.cleaned_data['city']}, {form.cleaned_data['state']}, {form.cleaned_data['postal_code']}, {form.cleaned_data['country']}",
+                total_price=sum(item.product.price * item.quantity for item in cart.items.all()),
+                payment_method=form.cleaned_data['payment_method']
             )
-        cart.items.all().delete()
-        return redirect('order_status', order_id=order.id)
-    return render(request, 'cart/view_cart.html', {'cart': cart})
+            for item in cart.items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity,
+                    price=item.product.price
+                )
+            cart.items.all().delete()
+            return redirect('order_confirmation', order_id=order.id)
+    else:
+        form = CheckoutForm()
+    return render(request, 'cart/checkout.html', {'cart': cart, 'form': form})
 
 
 @login_required
@@ -112,3 +117,25 @@ def order_history(request):
     else:
         orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'orders/order_history.html', {'orders': orders})
+
+
+@login_required
+def order_confirmation(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            order.shipping_address = f"{form.cleaned_data['street_address']}, {form.cleaned_data['city']}, {form.cleaned_data['state']}, {form.cleaned_data['postal_code']}, {form.cleaned_data['country']}"
+            order.payment_method = form.cleaned_data['payment_method']
+            order.save()
+            return redirect('order_status', order_id=order.id)
+    else:
+        form = CheckoutForm(initial={
+            'street_address': order.user.street_address,
+            'city': order.user.city,
+            'state': order.user.state,
+            'postal_code': order.user.postal_code,
+            'country': order.user.country,
+            'payment_method': order.payment_method
+        })
+    return render(request, 'cart/order_confirmation.html', {'order': order, 'form': form})
