@@ -63,7 +63,7 @@
             <form method="post" action="{% url 'product_detail' product.id %}">
                 {% csrf_token %}
                 {{ description_form.as_p }}
-                <button type="submit">Save</button>
+                <button type="submit" name="description_form">Save</button>
             </form>
         {% endif %}
 
