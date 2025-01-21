@@ -38,11 +38,13 @@
             <div class="row">
                 {% for event in user_events %}
                 <div class="col-md-6 col-lg-4 mb-4">
+                <a href="{% url 'product_detail' event.product.id %}">
                     <div class="card">
                         <div class="card-body">
                             <p class="card-text"><strong>{{ event.user.username }}</strong> commented on <strong>{{ event.product.name }}</strong></p>
                         </div>
                     </div>
+                    </a>
                 </div>
                 {% endfor %}
             </div>
